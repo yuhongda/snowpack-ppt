@@ -1,0 +1,445 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<style>
+			h2 {
+				text-transform: capitalize !important;
+			}
+			ul, p {
+				font-size: 30px;
+			}
+			.row{
+					display: flex;
+			}
+			.col{
+					flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<div class="row">
+						<div class="col">
+							<img src="./img/报名二维码.jpg" alt="报名二维码" width="300">
+						</div>
+						<div class="col">
+							<img src="./img/签到二维码.jpg" alt="签到二维码" width="300">
+						</div>
+						<div class="col">
+							<img src="./img/评估二维码.jpg" alt="评估二维码" width="300">
+						</div>
+					</div>
+				</section>
+				<section>
+					<a href="https://revealjs.com">
+						<img src="./img/snowpack_logo.png" alt="snowpack logo" class="demo-logo">
+					</a>
+					<h2 style="text-transform: capitalize;">Snowpack</h2>
+				</section>
+				<section>
+					<ol>
+						<li>什么是snowpack</li>
+						<li>原理</li>
+						<li>怎么用</li>
+						<li>老项目如何整合</li>
+						<li>与vite区别</li>
+						<li>snowpack-template-react-typescript</li>
+					</ol>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>什么是snowpack</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>什么是snowpack</h2>
+					<h2>为什么要打包？🤔</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>为什么要打包？🤔</h2>
+					<ul>
+						<li><p>浏览器环境不支持ESM</p></li>
+						<li><p>http1限制，大量依赖文件请求</p></li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>为什么要打包？🤔</h2>
+					<ul>
+						<li>
+							<p>浏览器环境不支持ESM</p>
+							<p><img src="./img/caniuse.png" alt="caniuse" height="300"></p>
+						</li>
+						<li>
+							<p>http1限制，大量依赖文件请求</p>
+							<p>HTTP 2.0💪</p>
+						</li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>所以snowpack使我们能够只在需要打包的时候才进行打包</h2>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>什么是snowpack</h2>
+					<ul>
+						<li>前端构建工具，如：Webpack、Parcel</li>
+						<li>No bundle、快速开发、轻量</li>
+						<li>支持HMR - Hot Module Replacement</li>
+						<li>支持Typescript、JSX、CSS Modules</li>
+						<li>支持Plugin</li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<ul>
+						<li>No bundle、快速开发、轻量</li>
+					</ul>
+					<p>怎么做到的🤔</p>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>Webpack</h2>
+					<p>
+						<img src="./img/webpack.gif" alt="webpack">
+					</p>
+					<p>所有js以及依赖都会打包成一个js文件</p>
+					<p>所有css以及依赖都会打包成一个css文件</p>
+					<p>每次文件修改后都会触发这个流程🤦‍♀️</p>
+				</section>
+				<section data-auto-animate-unmatched="fade">
+					<h2>Snowpack</h2>
+					<ul>
+						<li>
+							<p>No bundle: ESM</p>
+							<img src="./img/esm.png" alt="esm" style="width:200px;">
+						</li>
+						<li>
+							<p>文件一一对应</p>
+							<pre><code data-trim data-noescape style="font-size:12px;">
+								node_modules/react/**/*     -> http://localhost:3000/web_modules/react.js
+								node_modules/react-dom/**/* -> http://localhost:3000/web_modules/react-dom.js
+							</code></pre>
+						</li>
+						<li>
+							<p>按需编译</p>
+						</li>
+						<li>
+							<p>代码编译基于esbuild速度超快，且只需要编译一次</p>
+						</li>
+						<li>
+							<p>由于不需要打包，且只需要一次编译，所以可以进行cache</p>
+						</li>
+						<li>
+							<p>每次文件修改后，只需要重新编译对应的文件</p>
+						</li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<p>
+						<img src="./img/snowpack-vs-webpack.png" alt="snowpack-vs-webpack">
+					</p>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>好处</h2>
+					<ul>
+						<li>快速</li>
+						<li>项目大小不影响启动和编译速度</li>
+						<li>缓存</li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>怎么用</h2>
+					<br>
+					<p>安装</p>
+					<pre><code data-trim data-noescape style="font-size:12px;">
+						# using npm
+						npm install --save-dev snowpack
+
+						# using yarn
+						yarn add --dev snowpack
+					</code></pre>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>创建全新项目</h3>
+					<br>
+					<p>使用Create Snowpack App (CSA)</p>
+					<pre><code data-trim data-noescape style="font-size:12px;">
+						# using npm
+						npx create-snowpack-app new-dir --template [SELECT FROM BELOW] [--use-yarn]
+
+						# using yarn
+						yarn create snowpack-app new-dir --template [SELECT FROM BELOW] [--use-yarn]
+					</code></pre>
+					<br>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<p>启动</p>
+					<pre><code data-trim data-noescape style="font-size:12px;">
+						npx snowpack dev
+					</code></pre>
+					<p>
+						<img src="./img/startup.png" alt="snowpack-start-up" style="width: 600px;">
+					</p>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<p>启动流程</p>
+					<ol>
+						<li><p>扫描项目使用的npm依赖</p></li>
+						<li><p>将node_modules下安装的依赖独立打包成一个js文件，如/node_modules/react -> /web_modules/react.js</p></li>
+						<li><p>启动Snowpack Dev Server，直接加载esm</p></li>
+						<li><p>由于npm依赖基本不会变化，所以Snowpack会将编译结果进行cache</p></li>
+					</ol>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<section>
+						<h2>老项目如何整合🤔</h2>
+					</section>
+					<section>
+						<h3>使用ESM语法（import & export）</h3>
+						<p>npm依赖会自动使用es module版本，</p>
+						<p>如果依赖没有esm包，Snowpack会自动转换</p>
+					</section>
+					<section>
+						<h2>CSS</h2>
+						<p>Snowpack会自动将css加载到页面，同时也支持sass和less</p>
+						<pre><code data-trim data-noescape style="font-size:12px;">
+							import './style.css';
+							import './style.scss';
+							import './style.less';
+						</code></pre>
+					</section>
+					<section>
+						<h2>CSS Modules</h2>
+						<p>需要安装对应plugin，如：@snowpack/plugin-sass、snowpack-plugin-less-y</p>
+						<pre><code data-trim data-noescape style="font-size:12px;">
+							import styles from './style.module.css';
+							import styles from './style.module.scss';
+							import styles from './style.module.less';
+						</code></pre>
+					</section>
+					<section>
+						<h2>Image</h2>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							import img from './image.png';
+
+							<img src={img} />
+						</script></code></pre>
+					</section>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<section>
+						<h3 style="text-transform: lowercase;">showpack.config.ts</h3>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							export default {
+								extends: '@snowpack/app-scripts-react',
+								plugins: [
+									[
+										'@snowpack/plugin-babel',
+										{
+											input: ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
+											transformOptions: {},
+										},
+									],
+									['@snowpack/plugin-sass', {}],
+									['snowpack-plugin-less-y', { javascriptEnabled: true }],
+									'@snowpack/plugin-dotenv',
+									[
+										'@snowpack/plugin-postcss',
+										{
+											input: ['.css', '.scss'],
+										},
+									],
+								],
+								exclude: ['**/node_modules/**/*', '**/__tests__/*', '**/*.@(spec|test).@(js|mjs)'],
+								alias: {
+									'@': './src',
+								},
+								installOptions: {
+									polyfillNode: true,
+									env: { NODE_ENV: 'development', IS_SNOWPACK: true },
+									namedExports: ['mobx-react-router'],
+									sourceMap: false,
+									rollup: {
+										plugins: [require('rollup-plugin-less')({ exclude: [] }), require('@rollup/plugin-image')({ dom: true })],
+									},
+								},
+								devOptions: {
+									port: 8200,
+								},
+								proxy: {
+									'/api': {
+										target: 'http://c2m-open-pre-test.jd.com/',
+										secure: false,
+										changeOrigin: true,
+									},
+								},
+								install: [
+									'@babel/runtime/helpers/slicedToArray',
+									'@babel/runtime/helpers/toConsumableArray',
+									'@babel/runtime/helpers/defineProperty',
+									'@babel/runtime/regenerator',
+									'@babel/runtime/helpers/applyDecoratedDescriptor',
+									'@babel/runtime/helpers/getPrototypeOf',
+									'@babel/runtime/helpers/possibleConstructorReturn',
+									'@babel/runtime/helpers/inherits',
+									'@babel/runtime/helpers/assertThisInitialized',
+									'@babel/runtime/helpers/createClass',
+									'@babel/runtime/helpers/classCallCheck',
+									'@babel/runtime/helpers/asyncToGenerator',
+									'@babel/runtime/helpers/taggedTemplateLiteral',
+									'@babel/runtime/helpers/extends',
+									'@babel/runtime/helpers/initializerWarningHelper',
+									'@babel/runtime/helpers/initializerDefineProperty',
+									'@babel/runtime/helpers/objectWithoutProperties',
+									'lodash/cloneDeep',
+									'@babel/runtime/helpers/typeof',
+									'nornj-react/mobx/formData/esm',
+									'@babel/runtime/helpers/get',
+								],
+							};
+						</script></code></pre>
+					</section>
+					<section>
+						<h2>别名 alias</h2>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							alias: {
+								'@': './src',
+							},
+						</script></code></pre>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							import Button from `../../../../components/Button`;
+
+							import Button from `@/components/Button`;
+						</script></code></pre>
+					</section>
+					<section>
+						<h2>环境变量</h2>
+						<p>可以创建'.env'文件，配合plugin-dotenv</p>
+						<p>环境变量需要以SNOWPACK_PUBLIC_开头</p>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+								SNOWPACK_PUBLIC_NODE_ENV=development
+						</script></code></pre>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							{
+								"plugins": ["@snowpack/plugin-dotenv"]
+							}
+						</script></code></pre>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							import.meta.env.NODE_ENV
+						</script></code></pre>
+					</section>
+					<section>
+						<h2>Dev Server</h2>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							devOptions: {
+								port: 8200,
+							},
+							proxy: {
+								'/api': {
+									target: 'http://c2m-open-pre-test.jd.com/',
+									secure: false,
+									changeOrigin: true,
+								},
+							}
+						</script></code></pre>
+					</section>
+					<section>
+						<h2>namedExports</h2>
+						<p></p>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							installOptions: {
+								namedExports: ['mobx-react-router'],
+							},
+						</script></code></pre>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+						</script></code></pre>
+					</section>
+					<section>
+						<h3>HMR（Hot Module Replacement）</h3>
+						<p>Snowpack开发了基于ESM的ESM-HMR，支持标准HMR API</p>
+						<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+							if (import.meta.hot) {
+								import.meta.hot.accept(['./App.js', './stores/root.mst.js'], ({ module, deps }) => {
+									const App = deps[0].default;
+									_rootStore = deps[1].default;
+									applySnapshot(_rootStore, import.meta.hot.data.store);
+									render(App, _rootStore);
+								});
+						
+								import.meta.hot.dispose(() => {
+									import.meta.hot.data = { store: getSnapshot(_rootStore) };
+								});
+							}
+						</script></code></pre>
+					</section>
+				</section>
+				<section>
+					<h3>问题</h3>
+					<ul>
+						<li>
+							<p>nornj</p>
+							<p>升级最新版，加入esm打包</p>
+						</li>
+						<li>
+							<p>@scf/ui（1.24.2）</p>
+							<p>使用webpack别名处理</p>
+							<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+								resolve: {
+									alias: {
+										'@scf/ui/lib': path.resolve(__dirname, '../node_modules/@scf/ui/dist/index.js'),
+									},
+								},
+							</script></code></pre>
+							<pre><code data-trim data-noescape style="font-size:12px;"><script type="text/template">
+								import { ScfException } from '@scf/ui';
+								👇
+								import { ScfException } from '@scf/ui/lib';
+							</script></code></pre>
+						</li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>与vite区别</h3>
+					<ul>
+						<li><p>Vite灵感来自于Snowpack V1</p></li>
+						<li><p>Vite的ESM HMR先于Snowpack发布；当时Snowpack V1是不支持HMR的；Vite和Snowpack的HMR API会有细微差别</p></li>
+						<li><p>生产环境打包，Vite使用内建Rollup配置实现，而Snowpack需要借助plugin使用外部打包工具实现</p></li>
+						<li><p>Vite对Vue的支持会更好</p></li>
+						<li><p>Snowpack更加成熟完善，支持react， vue， preact， svelte；Vite还处于测试版</p></li>
+					</ul>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3><a href="https://github.com/yuhongda/snowpack-template-react-typescript">snowpack-template-react-typescript</a></h3>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h2>Thx</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
